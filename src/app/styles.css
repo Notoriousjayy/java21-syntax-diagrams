@@ -1,0 +1,38 @@
+@import "@prantlf/railroad-diagrams/railroad-diagrams.css";
+
+:root { --maxw: 1200px; }
+
+body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin: 0; }
+header { padding: 24px 16px; border-bottom: 1px solid #ddd; }
+main { max-width: var(--maxw); margin: 0 auto; padding: 16px; }
+nav { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 12px; }
+nav a { text-decoration: none; border: 1px solid #ccc; padding: 6px 10px; border-radius: 8px; color: #111; }
+nav a:hover { background: #f5f5f5; }
+section { padding: 18px 0; border-top: 1px solid #eee; }
+.rule { margin: 14px 0 22px; }
+.rule h3 { margin: 0 0 8px; font-size: 16px; font-weight: 650; }
+.rule .svgwrap { overflow-x: auto; padding-bottom: 6px; }
+footer { padding: 16px; border-top: 1px solid #ddd; color: #444; font-size: 13px; }
+footer a { color: #0066cc; }
+code { background: #f5f5f5; padding: 2px 6px; border-radius: 6px; }
+
+.subtitle { margin-top: 8px; color: #444; }
+.toolbar { margin-top: 12px; }
+.toolbar input {
+  width: min(720px, 100%);
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 14px;
+}
+.toolbar input:focus {
+  outline: none;
+  border-color: #0066cc;
+  box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+}
+
+h2 {
+  color: #333;
+  font-size: 1.4rem;
+  margin-bottom: 16px;
+}
