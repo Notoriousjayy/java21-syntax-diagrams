@@ -13,7 +13,7 @@
   "dependencies": {
     "@prantlf/railroad-diagrams": "^1.0.1",
     "react": "^19.2.3",
-    "react-dom": "^19.2.3"
+    "react-dom": "^19.2.4"
   },
   "devDependencies": {
     "@types/node": "^25.0.6",
