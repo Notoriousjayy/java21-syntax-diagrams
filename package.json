@@ -1,12 +1,14 @@
 {
-  "name": "java-syntax-diagrams",
+  "name": "java25-syntax-diagrams",
   "private": true,
   "version": "0.1.0",
   "type": "module",
   "scripts": {
     "dev": "webpack serve --config webpack.config.cjs --mode development --port 5174",
     "build": "webpack --config webpack.config.cjs --mode production",
-    "typecheck": "tsc --noEmit -p tsconfig.webpack.json"
+    "preview": "npx serve dist -l 5174",
+    "typecheck": "tsc --noEmit -p tsconfig.webpack.json",
+    "check-grammar": "node scripts/check-grammar-coverage.mjs"
   },
   "dependencies": {
     "@prantlf/railroad-diagrams": "^1.0.1",
@@ -19,6 +21,7 @@
     "@types/react-dom": "^19.2.0",
     "css-loader": "^7.1.2",
     "html-webpack-plugin": "^5.6.5",
+    "serve": "^14.2.4",
     "style-loader": "^4.0.0",
     "ts-loader": "^9.5.4",
     "typescript": "^5.9.3",

@@ -1,103 +1,114 @@
-# Java Syntax Diagrams
+# Java 25 Syntax Diagrams
 
-Interactive railroad diagrams (syntax diagrams) for the Java programming language, based on the Java Language Specification (JLS) SE 21.
+A React + TypeScript single-page app that renders **Java 25 grammar railroad diagrams** (SVG) and shows each rule's **EBNF text** underneath. The grammar is implemented as "diagram factories" that produce railroad-diagram objects.
 
-## Overview
+## Features
 
-This project provides a visual representation of Java's grammar using railroad diagrams. These diagrams make it easier to understand the syntax structure of Java by providing a graphical alternative to BNF notation.
+- **Railroad Diagrams**: Visual representation of Java 25 grammar rules using SVG
+- **EBNF Definitions**: Collapsible EBNF notation below each diagram
+- **Section Navigation**: Grammar rules organized by JLS chapter (Lexical, Types, Names, Packages, Classes, Interfaces, Arrays, Statements, Expressions)
+- **Search/Filter**: Filter rules by name
+- **Dark Mode**: Automatic dark mode support
+- **Lazy Rendering**: Sections are collapsed by default for performance with large grammar sets
 
-The grammar rules are organized by JLS chapter:
-- **§3 Lexical Structure** - Identifiers and literals
-- **§4 Types, Values, and Variables** - Primitive types, reference types, type parameters
-- **§6 Names** - Module, package, type, expression, and method names
-- **§7 Packages and Modules** - Compilation units, package and import declarations, modules
-- **§8 Classes** - Class declarations, fields, methods, constructors, enums, records
-- **§9 Interfaces** - Interface declarations, annotations
-- **§10 Arrays** - Array initializers
-- **§14 Blocks, Statements, and Patterns** - All statement types, patterns, try-catch
-- **§15 Expressions** - All expression types, lambda expressions, method references
-
-## Getting Started
-
-### Prerequisites
-
-- Node.js 18+ 
-- npm
-
-### Installation
+## Quick Start
 
 ```bash
+# Install dependencies
 npm install
-```
 
-### Development
-
-Start the development server:
-
-```bash
+# Run development server
 npm run dev
-```
 
-The application will be available at `http://localhost:5174`.
-
-### Production Build
-
-```bash
+# Build for production
 npm run build
-```
 
-The built files will be in the `dist/` directory.
+# Preview production build
+npm run preview
 
-### Type Checking
-
-```bash
+# Type check
 npm run typecheck
+
+# Check grammar coverage (diagram ↔ EBNF sync)
+npm run check-grammar
 ```
-
-## Technology Stack
-
-- **React 18** - UI framework
-- **TypeScript** - Type safety
-- **Webpack 5** - Bundling
-- **@prantlf/railroad-diagrams** - Railroad diagram generation
 
 ## Project Structure
 
 ```
-java-syntax-diagrams/
 ├── src/
-│   ├── main.tsx                          # Entry point
+│   ├── main.tsx                    # Entry point
 │   ├── app/
-│   │   ├── App.tsx                       # Main application component
-│   │   └── styles.css                    # Global styles
+│   │   ├── App.tsx                 # Main application component
+│   │   └── styles.css              # Global styles
 │   ├── components/
-│   │   ├── RuleDiagram.tsx               # Individual rule diagram
-│   │   └── RuleList.tsx                  # List of rule diagrams
+│   │   ├── RuleDiagram.tsx         # Individual rule diagram renderer
+│   │   └── RuleList.tsx            # List of rule diagrams
 │   ├── features/
 │   │   └── grammar/
-│   │       └── javaGrammar.ts            # Java grammar definitions
+│   │       ├── java25Grammar.ts    # Diagram factories & section definitions
+│   │       └── ebnfDefinitions.ts  # EBNF text definitions
 │   ├── shared/
 │   │   └── railroad/
-│   │       └── diagramToSvg.ts           # SVG rendering utility
+│   │       └── diagramToSvg.ts     # SVG conversion utility
 │   └── types/
-│       └── railroad-diagrams.d.ts        # Type declarations
+│       └── railroad-diagrams.d.ts  # Type declarations
+├── scripts/
+│   └── check-grammar-coverage.mjs  # Grammar/EBNF drift detection
 ├── .github/
-│   ├── dependabot.yml
-│   └── workflows/
-│       ├── codeql.yml
-│       ├── dependency-review.yml
-│       └── pages.yml
-├── index.html
-├── package.json
-├── tsconfig.json
-├── tsconfig.webpack.json
-└── webpack.config.cjs
+│   ├── workflows/
+│   │   ├── pages.yml               # GitHub Pages deployment
+│   │   ├── ci.yml                  # CI pipeline with typecheck
+│   │   ├── codeql.yml              # Security scanning
+│   │   └── dependency-review.yml   # Dependency vulnerability review
+│   └── dependabot.yml              # Automated dependency updates
+└── webpack.config.cjs              # Webpack configuration
 ```
+
+## CI/CD
+
+The project uses GitHub Actions for:
+
+1. **Type Safety**: `npm run typecheck` runs before every build
+2. **Grammar Coverage**: `npm run check-grammar` ensures diagram factories and EBNF definitions stay in sync
+3. **Security Scanning**: CodeQL analysis on push/PR and weekly schedule
+4. **Dependency Review**: Checks PRs for vulnerable dependencies
+5. **Automated Deployment**: GitHub Pages deployment on push to main
+
+## Development Notes
+
+### Adding New Grammar Rules
+
+1. Add the diagram factory in `src/features/grammar/java25Grammar.ts`:
+   ```typescript
+   rules.set("my-new-rule", () =>
+     Diagram(
+       Sequence(T("keyword"), NT("identifier"))
+     )
+   );
+   ```
+
+2. Add the EBNF definition in `src/features/grammar/ebnfDefinitions.ts`:
+   ```typescript
+   "my-new-rule": `my-new-rule:
+       keyword identifier`,
+   ```
+
+3. Add the rule to the appropriate section in `SECTION_RULES`
+
+4. Run `npm run check-grammar` to verify coverage
+
+### SVG Trust Boundary
+
+The `RuleDiagram` component uses `dangerouslySetInnerHTML` to render SVG. This is safe because:
+- SVG is generated locally from deterministic factories
+- No untrusted user input is processed
+- If external grammar loading is added in the future, implement defensive sanitization
 
 ## References
 
-- [Java Language Specification SE 21](https://docs.oracle.com/javase/specs/jls/se21/html/index.html)
-- [JLS Chapter 19 - Syntax](https://docs.oracle.com/javase/specs/jls/se21/html/jls-19.html)
+- [Java Language Specification SE 25](https://docs.oracle.com/javase/specs/jls/se25/html/index.html)
+- [JLS Chapter 19 - Syntax](https://docs.oracle.com/javase/specs/jls/se25/html/jls-19.html)
 - [Railroad Diagram (Wikipedia)](https://en.wikipedia.org/wiki/Syntax_diagram)
 
 ## License

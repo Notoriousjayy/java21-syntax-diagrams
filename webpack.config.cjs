@@ -31,6 +31,7 @@ module.exports = (env, argv) => {
           use: {
             loader: "ts-loader",
             options: {
+              // Keep transpileOnly for fast builds; typecheck is enforced separately in CI
               transpileOnly: true,
               configFile: path.resolve(__dirname, "tsconfig.webpack.json")
             }

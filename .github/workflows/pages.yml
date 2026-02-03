@@ -28,7 +28,17 @@ jobs:
           cache: "npm"
 
       - run: npm ci
-      - run: npm run build
+
+      # Type safety enforcement: catch type errors before deployment
+      - name: Typecheck
+        run: npm run typecheck
+
+      # Grammar/EBNF drift check
+      - name: Check grammar coverage
+        run: npm run check-grammar
+
+      - name: Build
+        run: npm run build
 
       - run: touch dist/.nojekyll
 

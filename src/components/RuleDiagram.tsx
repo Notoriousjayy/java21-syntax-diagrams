@@ -1,21 +1,47 @@
 import { useMemo } from "react";
 import { diagramToSvgString } from "../shared/railroad/diagramToSvg";
-import { createRuleDiagram } from "../features/grammar/javaGrammar";
+import { createRuleDiagram } from "../features/grammar/java25Grammar";
+import { getEbnfDefinition } from "../features/grammar/ebnfDefinitions";
 
-export function RuleDiagram(props: { name: string }) {
+interface RuleDiagramProps {
+  name: string;
+}
+
+/**
+ * Renders a railroad diagram for a Java 25 grammar rule,
+ * along with its EBNF definition displayed below.
+ * 
+ * Security note: SVG is generated locally from deterministic factories.
+ * No untrusted user input is processed. If external grammar loading is
+ * added in the future, implement defensive sanitization.
+ */
+export function RuleDiagram({ name }: RuleDiagramProps) {
   const svg = useMemo(() => {
-    const diagram = createRuleDiagram(props.name);
+    const diagram = createRuleDiagram(name);
     return diagramToSvgString(diagram);
-  }, [props.name]);
+  }, [name]);
+
+  const ebnf = useMemo(() => getEbnfDefinition(name), [name]);
 
   return (
-    <div className="rule" id={`rule-${props.name}`}>
-      <h3>{props.name}</h3>
+    <div className="rule" id={`rule-${name}`}>
+      <h3>{name}</h3>
+
+      {/* Railroad Diagram */}
       <div
         className="svgwrap"
         // SVG is generated locally from deterministic factories.
+        // Trust boundary: no untrusted input is processed here.
         dangerouslySetInnerHTML={{ __html: svg }}
       />
+
+      {/* EBNF Definition */}
+      {ebnf && (
+        <details className="ebnf-container" open>
+          <summary className="ebnf-toggle">EBNF</summary>
+          <pre className="ebnf-code">{ebnf}</pre>
+        </details>
+      )}
     </div>
   );
 }
