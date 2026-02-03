@@ -12,12 +12,12 @@
   },
   "dependencies": {
     "@prantlf/railroad-diagrams": "^1.0.1",
-    "react": "^19.2.3",
+    "react": "^19.2.4",
     "react-dom": "^19.2.3"
   },
   "devDependencies": {
     "@types/node": "^25.0.6",
-    "@types/react": "^19.2.0",
+    "@types/react": "^19.2.10",
     "@types/react-dom": "^19.2.0",
     "css-loader": "^7.1.2",
     "html-webpack-plugin": "^5.6.5",
