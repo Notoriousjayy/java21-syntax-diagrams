@@ -1,0 +1,4 @@
+name: Notoriousjayy/java21-syntax-diagrams-codeql-pack
+version: 0.0.1
+library: true
+dependencies: {}
